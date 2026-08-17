@@ -1,0 +1,24 @@
+name: Alerta
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar programa hola mundo
+        run: node index.js
+
+      - name: Enviar notificacion a ntfy.sh
+        run: |
+          curl -d "Nuevo push a main en el repositorio ${{ github.repository }} por ${{ github.actor }}" \
+            -H "Title: Nuevo push detectado" \
+            -H "Priority: default" \
+            -H "Tags: rocket" \
+            ntfy.sh/devops-itla
